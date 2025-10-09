@@ -336,7 +336,53 @@ section {
 .case-study-subtitle {
     color: var(--primary-color);
     font-weight: 600;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.05rem;
+}
+
+.case-study-section {
+    margin-bottom: 1.5rem;
+}
+
+.case-study-section h4 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.75rem;
+    margin-top: 1rem;
+}
+
+.case-study-section p {
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 0.5rem;
+}
+
+.case-study-section ul {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 0.75rem;
+}
+
+.case-study-section ul li {
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.case-study-section ul li:before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.case-study-section ul li strong {
+    color: var(--text-dark);
+    font-weight: 600;
 }
 
 .case-study-description {
@@ -347,7 +393,7 @@ section {
 
 .case-study-highlights {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 1.5rem;
     margin-bottom: 1.5rem;
     padding: 1.5rem;
