@@ -54,6 +54,27 @@ body {
     padding: 1rem 0;
 }
 
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.logo-img {
+    height: 40px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.05);
+}
+
 .logo h2 {
     font-size: 1.5rem;
     font-weight: 800;
@@ -604,6 +625,13 @@ section {
 
 .footer-section h3 span {
     color: var(--primary-color);
+}
+
+.footer-logo {
+    height: 40px;
+    width: auto;
+    margin-bottom: 1rem;
+    filter: brightness(0) invert(1);
 }
 
 .footer-section h4 {
