@@ -97,5 +97,4 @@ Update CSS variables in `styles.css`:
 Modify or extend JavaScript in `script.js`
 
 ## Support
-
 For issues or questions, please open an issue in the repository.
