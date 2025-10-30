@@ -131,22 +131,17 @@ contactForm.addEventListener("submit", async (e) => {
     // Sign up at https://web3forms.com to get your access key
     const WEB3FORMS_ACCESS_KEY = "94b5ceab-2aa0-4ec5-98de-24bf9ed08903";
 
-    const web3FormsData = {
-      access_key: WEB3FORMS_ACCESS_KEY,
-      name: formDataObj.name,
-      email: formDataObj.email,
-      subject: formDataObj.subject,
-      message: formDataObj.message,
-    };
-
-    // Uncomment this block when you have your Web3Forms access key
+    // Create FormData object for Web3Forms (works better with CORS)
+    const web3FormData = new FormData();
+    web3FormData.append("access_key", WEB3FORMS_ACCESS_KEY);
+    web3FormData.append("name", formDataObj.name);
+    web3FormData.append("email", formDataObj.email);
+    web3FormData.append("subject", formDataObj.subject);
+    web3FormData.append("message", formDataObj.message);
 
     const response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(web3FormsData),
+      body: web3FormData,
     });
 
     const result = await response.json();
