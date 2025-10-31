@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Onboarding & Assessment Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with Subtle Accents -->
+    <!-- Application Structure Plan: A vertical, step-by-step timeline/process flow. This structure was chosen to guide the candidate through a linear, sequential process, which is the core of the source document. Each step is a distinct section, making the process clear and digestible. The user clicks "Next Step" to reveal the subsequent section, creating a focused, one-task-at-a-time experience that reduces overwhelm and improves completion rates. This is more intuitive for a procedural guide than a dashboard. -->
+    <!-- Visualization & Content Choices: 
+        - Process Flow: Goal is to organize the steps. Method is a styled vertical timeline using HTML/CSS with Tailwind. Interaction is revealing steps sequentially via button clicks. Justification is that this visually reinforces the required order of operations.
+        - Step Cards: Goal is to inform. Method is styled `div` cards. Each card contains the title, description, and a link. Justification is to chunk information into clean, manageable blocks.
+        - Progress Bar: Goal is to show change/progress. Method is a dynamic HTML/CSS bar updated with JS. Interaction is the bar filling as the user advances. Justification is to provide positive reinforcement and show the user where they are in the process.
+        - Links/Buttons: Goal is to allow action. Method is styled `<a>` tags. Interaction is click-to-navigate. Justification is to provide clear calls-to-action for each step.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fdfcfb;
+            color: #333;
+        }
+        .step-content {
+            transition: max-height 0.7s ease-in-out, opacity 0.5s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .step-content.active {
+            max-height: 1000px;
+            opacity: 1;
+        }
+        .step-indicator {
+            transition: all 0.4s ease-in-out;
+        }
+        .step-line {
+            transition: all 0.4s ease-in-out;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto px-4 py-8 md:py-16 max-w-4xl">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-2">Your Journey Starts Here</h1>
+            <p class="text-lg text-gray-600">Follow the steps below to begin our unique assessment process.</p>
+        </header>
+
+        <div id="progress-container" class="w-full bg-gray-200 rounded-full h-2.5 mb-12">
+            <div id="progress-bar" class="bg-indigo-600 h-2.5 rounded-full" style="width: 0%; transition: width 0.5s ease-in-out;"></div>
+        </div>
+
+        <main id="assessment-steps">
+            <!-- Step 1: Introduction -->
+            <div id="step-0" class="step-container mb-8">
+                <div class="flex items-center">
+                    <div id="indicator-0" class="step-indicator z-10 flex items-center justify-center w-12 h-12 bg-indigo-600 rounded-full text-white font-bold text-lg ring-8 ring-white">
+                        <span>1</span>
+                    </div>
+                    <div class="flex-auto border-t-2 border-gray-300"></div>
+                </div>
+                <div class="pl-4 mt-4">
+                    <h2 class="font-bold text-2xl text-gray-800 mb-2">Welcome!</h2>
+                    <div id="content-0" class="step-content active">
+                        <p class="text-gray-700 mb-6">Thank you for your interest in joining our team! We believe in prioritizing practical skills and providing a clear, transparent path for every candidate. This interactive guide outlines our unique, self-paced assessment process. We review applications as they are completed, so we encourage you to proceed through these steps as soon as you can to give yourself the best chance of being considered.</p>
+                        <button onclick="nextStep(1)" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-indigo-700 transition-colors">Start Step 1</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 2: Video Courses -->
+            <div id="step-1" class="step-container mb-8">
+                <div class="flex items-center">
+                    <div id="indicator-1" class="step-indicator z-10 flex items-center justify-center w-12 h-12 bg-gray-400 rounded-full text-white font-bold text-lg ring-8 ring-white">
+                        <span>2</span>
+                    </div>
+                    <div class="flex-auto border-t-2 border-gray-300"></div>
+                </div>
+                <div class="pl-4 mt-4">
+                    <h2 class="font-bold text-2xl text-gray-800 mb-2">Foundational Video Courses</h2>
+                    <div id="content-1" class="step-content">
+                        <p class="text-gray-700 mb-6">Before the technical assessment, please watch these two comprehensive video courses. They provide the foundational knowledge needed for the subsequent steps and align with the practical skills we value.</p>
+                        <div class="space-y-4 mb-6">
+                            <div class="p-6 border border-gray-200 rounded-lg bg-white shadow-sm">
+                                <h3 class="font-semibold text-lg text-gray-800 mb-1">Python Full Course for Beginners</h3>
+                                <p class="text-sm text-gray-600 mb-3">A complete introduction to Python, from basic syntax to hands-on projects in automation, machine learning, and web development.</p>
+                                <a href="https://www.youtube.com/watch?v=_uQrJ0TkZlc" target="_blank" class="inline-block text-indigo-600 font-semibold hover:underline">Watch Video →</a>
+                            </div>
+                            <div class="p-6 border border-gray-200 rounded-lg bg-white shadow-sm">
+                                <h3 class="font-semibold text-lg text-gray-800 mb-1">SQL Full Course for Beginners</h3>
+                                <p class="text-sm text-gray-600 mb-3">Learn the fundamentals of SQL and database management, from basic SELECT statements to complex queries.</p>
+                                <a href="https://www.youtube.com/watch?v=7S_tz1z_5bA" target="_blank" class="inline-block text-indigo-600 font-semibold hover:underline">Watch Video →</a>
+                            </div>
+                        </div>
+                        <button onclick="nextStep(2)" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-indigo-700 transition-colors">Next Step</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 3: HackerRank Assessment -->
+            <div id="step-2" class="step-container mb-8">
+                <div class="flex items-center">
+                    <div id="indicator-2" class="step-indicator z-10 flex items-center justify-center w-12 h-12 bg-gray-400 rounded-full text-white font-bold text-lg ring-8 ring-white">
+                        <span>3</span>
+                    </div>
+                    <div class="flex-auto border-t-2 border-gray-300"></div>
+                </div>
+                <div class="pl-4 mt-4">
+                    <h2 class="font-bold text-2xl text-gray-800 mb-2">Practical Skills Assessment</h2>
+                    <div id="content-2" class="step-content">
+                        <p class="text-gray-700 mb-6">Once you're comfortable with the concepts from the videos, demonstrate your proficiency by earning the intermediate skills certification for both Python and SQL on HackerRank.</p>
+                        <div class="space-y-4 mb-6">
+                            <div class="p-6 border border-gray-200 rounded-lg bg-white shadow-sm">
+                                <h3 class="font-semibold text-lg text-gray-800 mb-1">HackerRank Python (Intermediate)</h3>
+                                <a href="https://www.hackerrank.com/domains/python" target="_blank" class="inline-block text-indigo-600 font-semibold hover:underline">Take Test →</a>
+                            </div>
+                            <div class="p-6 border border-gray-200 rounded-lg bg-white shadow-sm">
+                                <h3 class="font-semibold text-lg text-gray-800 mb-1">HackerRank SQL (Intermediate)</h3>
+                                <a href="https://www.hackerrank.com/domains/sql" target="_blank" class="inline-block text-indigo-600 font-semibold hover:underline">Take Test →</a>
+                            </div>
+                        </div>
+                        <button onclick="nextStep(3)" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-indigo-700 transition-colors">Next Step</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Step 4: Review -->
+            <div id="step-3" class="step-container mb-8">
+                <div class="flex items-center">
+                    <div id="indicator-3" class="step-indicator z-10 flex items-center justify-center w-12 h-12 bg-gray-400 rounded-full text-white font-bold text-lg ring-8 ring-white">
+                        <span>4</span>
+                    </div>
+                    <div class="flex-auto border-t-2 border-gray-300"></div>
+                </div>
+                <div class="pl-4 mt-4">
+                    <h2 class="font-bold text-2xl text-gray-800 mb-2">Review and Refresh</h2>
+                     <div id="content-3" class="step-content">
+                        <p class="text-gray-700 mb-6">Great work on getting the certifications! Before the final step, please take some time to review the concepts from both the videos and the practical problems you solved. The final interview will be based heavily on this material.</p>
+                        <button onclick="nextStep(4)" class="bg-indigo-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-indigo-700 transition-colors">Next Step</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Schedule Interview -->
+            <div id="step-4" class="step-container">
+                <div class="flex items-center">
+                    <div id="indicator-4" class="step-indicator z-10 flex items-center justify-center w-12 h-12 bg-gray-400 rounded-full text-white font-bold text-lg ring-8 ring-white">
+                        <span>5</span>
+                    </div>
+                </div>
+                 <div class="pl-4 mt-4">
+                    <h2 class="font-bold text-2xl text-gray-800 mb-2">Schedule Your Interview</h2>
+                    <div id="content-4" class="step-content">
+                        <p class="text-gray-700 mb-4">Congratulations on completing all the preliminary steps! Once you feel confident in your preparation, please contact our administrator to be placed in the interview queue. Remember, the sooner you complete the process and get in touch, the better your chance of securing an interview.</p>
+                        <a href="mailto:sugumar.sengotaiyan@athivatech.com" class="inline-block bg-green-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-green-700 transition-colors text-lg">Contact Admin to Schedule</a>
+                        <p class="text-sm text-gray-600 mt-4">We appreciate you taking the time to go through our process and look forward to hearing from you soon. Good luck!</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        const totalSteps = 5;
+
+        function nextStep(step) {
+            if (step > currentStep) {
+                currentStep = step;
+            }
+
+            for (let i = 0; i < totalSteps; i++) {
+                const content = document.getElementById(`content-${i}`);
+                const indicator = document.getElementById(`indicator-${i}`);
+                
+                if (i < currentStep) {
+                    content.classList.remove('active');
+                    indicator.classList.remove('bg-indigo-600');
+                    indicator.classList.add('bg-green-600');
+                } else if (i === currentStep) {
+                     content.classList.add('active');
+                     indicator.classList.remove('bg-gray-400');
+                     indicator.classList.add('bg-indigo-600');
+                }
+            }
+            
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            const progress = (currentStep / (totalSteps - 1)) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+             nextStep(0);
+        });
+    </script>
+</body>
+</html>
