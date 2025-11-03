@@ -1,0 +1,13 @@
+# robots.txt for athivatech.com
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://athivatech.com/sitemap.xml
+
+# Crawl-delay for all bots
+Crawl-delay: 1
+
+# Disallow certain paths if needed (currently allowing all)
+# Disallow: /admin/
+# Disallow: /private/
