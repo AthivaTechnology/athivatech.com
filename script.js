@@ -158,7 +158,7 @@ contactForm.addEventListener("submit", async (e) => {
   } catch (error) {
     console.error("Error:", error);
     showNotification(
-      "Oops! Something went wrong. Please try again or email us directly at contact@athivatech.com",
+      "Oops! Something went wrong. Please try again or email us directly at admin@athivatech.com",
       "error"
     );
   } finally {

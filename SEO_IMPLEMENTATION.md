@@ -143,7 +143,7 @@ Three types of structured data implemented:
 - [ ] Content marketing started (needs action)
 
 ## Contact for SEO Support
-For questions or updates to SEO strategy, contact: contact@athivatech.com
+For questions or updates to SEO strategy, contact: admin@athivatech.com
 
 ## Last Updated
 October 31, 2025
