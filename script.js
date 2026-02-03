@@ -122,11 +122,6 @@ contactForm.addEventListener("submit", async (e) => {
 
     const response = await fetch(SCRIPT_URL, {
       method: "POST",
-      // mode: "no-cors", // 'no-cors' is often needed for Google Apps Script simple triggers, 
-                         // BUT 'no-cors' prevents reading the response.
-                         // Standard setup usually returns a redirect which fetch follows.
-                         // For this setup, we'll try standard CORS first as the script returns JSON.
-                         // If that fails, we might need to adjust.
       body: JSON.stringify({
         ...formDataObj,
         date: new Date().toISOString()
