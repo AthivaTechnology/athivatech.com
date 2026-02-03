@@ -110,51 +110,50 @@ contactForm.addEventListener("submit", async (e) => {
   submitBtn.textContent = "Sending...";
   submitBtn.style.opacity = "0.6";
 
+  // Google Apps Script Web App URL
+  // TODO: Replace this with your actual deployed script URL
+  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbygGidW_Y69JXpXxIh5rIIAjqiUmvuegQAMwowfMc9qLdHq3rVg-ShcS91_zWl-r-6p/exec";
+
   try {
-    // Uncomment and update the URL when we have a backend endpoint
-    /*
-        const response = await fetch('YOUR_API_ENDPOINT_HERE', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formDataObj)
-        });
-        
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        
-        const result = await response.json();
-        */
+    // Check if the URL is still the placeholder (just in case)
+    if (SCRIPT_URL.includes("YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE")) {
+      throw new Error("Please configure the SCRIPT_URL in script.js");
+    }
 
-    // Sign up at https://web3forms.com to get your access key
-    const WEB3FORMS_ACCESS_KEY = "94b5ceab-2aa0-4ec5-98de-24bf9ed08903";
-
-    // Create FormData object for Web3Forms (works better with CORS)
-    const web3FormData = new FormData();
-    web3FormData.append("access_key", WEB3FORMS_ACCESS_KEY);
-    web3FormData.append("name", formDataObj.name);
-    web3FormData.append("email", formDataObj.email);
-    web3FormData.append("subject", formDataObj.subject);
-    web3FormData.append("message", formDataObj.message);
-
-    const response = await fetch("https://api.web3forms.com/submit", {
+    const response = await fetch(SCRIPT_URL, {
       method: "POST",
-      body: web3FormData,
+      // mode: "no-cors", // 'no-cors' is often needed for Google Apps Script simple triggers, 
+                         // BUT 'no-cors' prevents reading the response.
+                         // Standard setup usually returns a redirect which fetch follows.
+                         // For this setup, we'll try standard CORS first as the script returns JSON.
+                         // If that fails, we might need to adjust.
+      body: JSON.stringify({
+        ...formDataObj,
+        date: new Date().toISOString()
+      }),
     });
 
+    // Google Apps Script usually returns a redirect, which fetch follows automatically.
+    // However, if we use ContentService.createTextOutput, it might just return JSON.
+    
+    // Note: If using 'no-cors', we can't check response.ok or response.json()
+    // We would have to assume success.
+    // For now, let's assume we can read the response (requires correct GAS headers or redirect).
+    
+    // Actually, for simple DOPOST in GAS without specialized headers, it's often best to handle the result
+    // blindly if CORS is strict, but let's try to parse the JSON result we programmed.
     const result = await response.json();
 
-    if (result.success) {
+    if (result.result === "success") {
       showNotification(
         "Thank you for your message! We will get back to you soon.",
         "success"
       );
       contactForm.reset();
     } else {
-      throw new Error(result.message || "Something went wrong");
+      throw new Error(result.error || "Something went wrong");
     }
+
   } catch (error) {
     console.error("Error:", error);
     showNotification(
