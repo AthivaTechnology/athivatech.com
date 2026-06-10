@@ -1,3 +1,8 @@
+/* Hide reCAPTCHA badge (notice shown in footer per Google's ToS) */
+.grecaptcha-badge {
+    visibility: hidden !important;
+}
+
 /* Reset and Base Styles */
 * {
     margin: 0;

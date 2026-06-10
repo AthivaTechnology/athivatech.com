@@ -87,64 +87,77 @@ animateElements.forEach((el) => {
   observer.observe(el);
 });
 
-// Contact form handling
+// ── reCAPTCHA Configuration ──────────────────────────────────
+const V3_SITE_KEY = "6LdhFQstAAAAAAHKtwXRO2f2_bhnXC6fkxH1yiz0";
+const V2_SITE_KEY = "6LfdFQstAAAAAAGA4jQ-2gEFTdZV1do_08ycUk1U";
+const SCRIPT_URL  = "https://script.google.com/macros/s/AKfycbxMF3h0O8CLqEyh7xLMxtdRqsQYMCWxu88jjXGzasBlJ2D_AfUPzkykZnYEICxFqv0/exec";
+
+// ── Contact Form with reCAPTCHA v3 + v2 Fallback ─────────────
 const contactForm = document.getElementById("contactForm");
+let v2WidgetId  = null;
+let v2Required  = false;
+
 contactForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  // Get form data
-  const formData = new FormData(contactForm);
-  const formDataObj = {
-    name: formData.get("name"),
-    email: formData.get("email"),
-    subject: formData.get("subject"),
-    message: formData.get("message"),
-  };
-
-  // Get the submit button
+  const formData  = new FormData(contactForm);
   const submitBtn = contactForm.querySelector('button[type="submit"]');
-  const originalBtnText = submitBtn.textContent;
+  const origText  = submitBtn.textContent;
 
-  // Disable button and show loading state
-  submitBtn.disabled = true;
+  submitBtn.disabled    = true;
   submitBtn.textContent = "Sending...";
   submitBtn.style.opacity = "0.6";
 
-  // Google Apps Script Web App URL
-  // TODO: Replace this with your actual deployed script URL
-  const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbygGidW_Y69JXpXxIh5rIIAjqiUmvuegQAMwowfMc9qLdHq3rVg-ShcS91_zWl-r-6p/exec";
-
   try {
-    // Check if the URL is still the placeholder (just in case)
-    if (SCRIPT_URL.includes("YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE")) {
-      throw new Error("Please configure the SCRIPT_URL in script.js");
+    let recaptchaToken, recaptchaVersion;
+
+    if (v2Required) {
+      // v2 path: read completed checkbox token
+      recaptchaToken   = grecaptcha.getResponse(v2WidgetId);
+      recaptchaVersion = "v2";
+      if (!recaptchaToken) {
+        document.getElementById("recaptchaV2Error").style.display = "block";
+        return;
+      }
+    } else {
+      // v3 path: execute silently in background
+      recaptchaToken = await new Promise((resolve, reject) => {
+        grecaptcha.ready(() => {
+          grecaptcha.execute(V3_SITE_KEY, { action: "contact" })
+            .then(resolve)
+            .catch(reject);
+        });
+      });
+      recaptchaVersion = "v3";
     }
 
     const response = await fetch(SCRIPT_URL, {
       method: "POST",
       body: JSON.stringify({
-        ...formDataObj,
-        date: new Date().toISOString()
+        name:             formData.get("name"),
+        email:            formData.get("email"),
+        subject:          formData.get("subject"),
+        message:          formData.get("message"),
+        date:             new Date().toISOString(),
+        recaptchaToken,
+        recaptchaVersion,
       }),
     });
 
-    // Google Apps Script usually returns a redirect, which fetch follows automatically.
-    // However, if we use ContentService.createTextOutput, it might just return JSON.
-    
-    // Note: If using 'no-cors', we can't check response.ok or response.json()
-    // We would have to assume success.
-    // For now, let's assume we can read the response (requires correct GAS headers or redirect).
-    
-    // Actually, for simple DOPOST in GAS without specialized headers, it's often best to handle the result
-    // blindly if CORS is strict, but let's try to parse the JSON result we programmed.
     const result = await response.json();
 
     if (result.result === "success") {
-      showNotification(
-        "Thank you for your message! We will get back to you soon.",
-        "success"
-      );
+      showNotification("Thank you for your message! We will get back to you soon.", "success");
       contactForm.reset();
+      if (v2Required) {
+        grecaptcha.reset(v2WidgetId);
+        v2Required = false;
+        v2WidgetId = null;
+        document.getElementById("recaptchaV2Container").style.display = "none";
+        document.getElementById("recaptchaV2Error").style.display     = "none";
+      }
+    } else if (result.result === "low_score") {
+      showV2Challenge();
     } else {
       throw new Error(result.error || "Something went wrong");
     }
@@ -156,12 +169,27 @@ contactForm.addEventListener("submit", async (e) => {
       "error"
     );
   } finally {
-    // Re-enable button
-    submitBtn.disabled = false;
-    submitBtn.textContent = originalBtnText;
+    submitBtn.disabled    = false;
+    submitBtn.textContent = origText;
     submitBtn.style.opacity = "1";
   }
 });
+
+function showV2Challenge() {
+  const container = document.getElementById("recaptchaV2Container");
+  container.style.display = "block";
+  if (v2WidgetId === null) {
+    v2WidgetId = grecaptcha.render("recaptchaV2Widget", {
+      sitekey: V2_SITE_KEY,
+      theme:   "light",
+    });
+  } else {
+    grecaptcha.reset(v2WidgetId);
+  }
+  v2Required = true;
+  showNotification("One more step — complete the security check below, then click Send Message again.", "info");
+  container.scrollIntoView({ behavior: "smooth", block: "center" });
+}
 
 // Notification function to show messages to users
 function showNotification(message, type = "info") {

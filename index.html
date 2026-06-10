@@ -252,6 +252,9 @@
         }
     }
     </script>
+
+    <!-- reCAPTCHA API (v3 + supports v2 widget rendering) -->
+    <script src="https://www.google.com/recaptcha/api.js?render=6LdhFQstAAAAAAHKtwXRO2f2_bhnXC6fkxH1yiz0" async defer></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -739,6 +742,13 @@
                     <div class="form-group">
                         <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
                     </div>
+                    <!-- reCAPTCHA v2 fallback (hidden until v3 score is too low) -->
+                    <div id="recaptchaV2Container" style="display:none; margin-bottom:1rem;">
+                        <div id="recaptchaV2Widget"></div>
+                        <p id="recaptchaV2Error" style="display:none; color:#ef4444; font-size:0.875rem; margin-top:0.5rem;">
+                            Please complete the security check above, then click Send Message again.
+                        </p>
+                    </div>
                     <button type="submit" class="btn btn-primary">Send Message</button>
                 </form>
             </div>
@@ -779,6 +789,11 @@
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2024 Athiva Technology. All rights reserved.</p>
+                <p style="font-size:0.75rem; opacity:0.6; margin-top:0.4rem;">
+                    This site is protected by reCAPTCHA and the Google
+                    <a href="https://policies.google.com/privacy" target="_blank" rel="noopener" style="color:inherit;">Privacy Policy</a> and
+                    <a href="https://policies.google.com/terms" target="_blank" rel="noopener" style="color:inherit;">Terms of Service</a> apply.
+                </p>
             </div>
         </div>
     </footer>
