@@ -1,0 +1,39 @@
+# Netlify Configuration for Athiva Technology
+
+# 1. Force PDF direct download (attachment header prevents browser preview)
+[[headers]]
+  for = "/Athiva_NamVandi.pdf"
+  [headers.values]
+    Content-Disposition = "attachment; filename=\"Athiva_NamVandi.pdf\""
+    Content-Type = "application/pdf"
+
+# 2. Redirect QR Scanner URLs directly to the PDF
+[[redirects]]
+  from = "/Qr-scanner"
+  to = "/Athiva_NamVandi.pdf"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/qr-scanner"
+  to = "/Athiva_NamVandi.pdf"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/QR-scanner"
+  to = "/Athiva_NamVandi.pdf"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/Qr-scanner/"
+  to = "/Athiva_NamVandi.pdf"
+  status = 302
+  force = true
+
+[[redirects]]
+  from = "/qr-scanner/"
+  to = "/Athiva_NamVandi.pdf"
+  status = 302
+  force = true
