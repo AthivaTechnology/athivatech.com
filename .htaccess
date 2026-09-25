@@ -12,8 +12,9 @@
     # RewriteCond %{HTTP_HOST} !^www\. [NC]
     # RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-    # QR Scanner - redirect directly to PDF download (case-insensitive)
-    RewriteRule ^qr-scanner/?$ /Athiva_NamVandi.pdf [R=302,L,NC]
+    # QR Scanner - redirect directly to PDF download (case-insensitive, bypass directory check)
+    RewriteCond %{REQUEST_URI} ^/[Qq][Rr]-[Ss]canner/?$ [NC]
+    RewriteRule .* /Athiva_NamVandi.pdf [R=302,L]
 </IfModule>
 
 # Compression for faster loading
