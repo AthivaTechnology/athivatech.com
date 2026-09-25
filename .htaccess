@@ -62,6 +62,14 @@
     Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 </IfModule>
 
+# QR Scanner - redirect directly to PDF download
+RewriteRule ^Qr-scanner/?$ /Athiva_NamVandi.pdf [R=302,L]
+
+# Force PDF download (no browser preview)
+<Files "Athiva_NamVandi.pdf">
+    Header set Content-Disposition "attachment; filename=Athiva_NamVandi.pdf"
+</Files>
+
 # Custom Error Pages
 ErrorDocument 404 /404.html
 ErrorDocument 500 /500.html
