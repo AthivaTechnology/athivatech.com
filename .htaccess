@@ -3,14 +3,17 @@
 # Enable Rewrite Engine
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    
+
     # Force HTTPS
     RewriteCond %{HTTPS} off
     RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-    
+
     # Force www or non-www (choose one)
     # RewriteCond %{HTTP_HOST} !^www\. [NC]
     # RewriteRule ^(.*)$ https://www.%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # QR Scanner - redirect directly to PDF download (case-insensitive)
+    RewriteRule ^qr-scanner/?$ /Athiva_NamVandi.pdf [R=302,L,NC]
 </IfModule>
 
 # Compression for faster loading
@@ -61,9 +64,6 @@
     # Permissions Policy
     Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
 </IfModule>
-
-# QR Scanner - redirect directly to PDF download
-RewriteRule ^Qr-scanner/?$ /Athiva_NamVandi.pdf [R=302,L]
 
 # Force PDF download (no browser preview)
 <Files "Athiva_NamVandi.pdf">
