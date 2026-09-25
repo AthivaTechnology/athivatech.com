@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athiva Technology - QR Code</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .card {
+            border: 2px solid #e2e8f0;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 360px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            height: 40px;
+            margin-bottom: 28px;
+        }
+
+        .qr-wrap {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px;
+            display: inline-block;
+            margin-bottom: 24px;
+        }
+
+        .qr-wrap img {
+            width: 220px;
+            height: 220px;
+            display: block;
+        }
+
+        h2 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 6px;
+        }
+
+        p {
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .url {
+            margin-top: 16px;
+            font-size: 11px;
+            color: #94a3b8;
+            word-break: break-all;
+        }
+
+        @media print {
+            body { background: #fff; }
+            .card { border: 2px solid #000; }
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <img src="/logo.svg" alt="Athiva Technology" class="logo">
+
+    <div class="qr-wrap">
+        <img
+            src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=0&data=https://athivatech.com/Qr-scanner"
+            alt="QR Code - Athiva NamVandi PDF"
+        >
+    </div>
+
+    <h2>Scan to Download</h2>
+    <p>Scan this QR code to download the<br>Athiva NamVandi document.</p>
+
+    <div class="url">athivatech.com/Qr-scanner</div>
+</div>
+</body>
+</html>
